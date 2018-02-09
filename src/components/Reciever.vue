@@ -1,0 +1,44 @@
+<template>
+  <div id="receiver-app">
+    <div>
+      <h2>Receiver</h2>
+      <div v-for="item in list">
+        <span
+          v-if="list"
+          v-text="item">
+        </span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'receiver-app',
+    data () {
+      return {
+        list: []
+      }
+    },
+    created() {
+      this.$eventBus.$on('message', this.onReceive);
+    },
+    methods: {
+      onReceive(text) {
+        var self = this;
+        this.list.push(text);
+        setTimeout(function() {
+          self.list.shift()
+        }, 5000);
+      }
+    }
+  }
+</script>
+
+<style>
+  #receiver-app {
+    border:1px solid #BBBBBB;
+    border-radius: 10px;
+    padding:20px;
+  }
+</style>
